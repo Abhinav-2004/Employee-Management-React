@@ -1,32 +1,21 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import axios from "axios";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+import EmployeeProfilePage from "./pages/EmployeeProfilePage";
+import Navbar from "./components/Navbar";
 function App() {
-  const [count, setCount] = useState(0);
-
-  const username = "admin1@gmail.com";
-  const password = "12345";
-
-  // Encode in Base64
-  const basicAuth = "Basic " + btoa(`${username}:${password}`);
-
-  axios
-    .get("http://localhost:8080/employees/1001", {
-      headers: {
-        Authorization: basicAuth,
-      },
-    })
-    .then((response) => {
-      console.log("Response Data:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
   return (
     <>
-      <div className="text-xl">hello world</div>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<EmployeeDashboard />} />
+          <Route path="/employee/:id" element={<EmployeeProfilePage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
